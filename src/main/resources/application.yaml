@@ -1,8 +1,20 @@
 server:
-  port: 8080
+  port: 8082
 
 
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:9999/eureka/
+    enabled: false
+
+spring:
+  webflux:
+    base-path: /event-service-api
+  data:
+    mongodb:
+      auto-index-creation: true
+      uri: mongodb://localhost:27017/wayd-event
+
+jwt:
+  secret: very-secret-key
