@@ -9,6 +9,8 @@ eureka:
     enabled: false
 
 spring:
+  application:
+    name: wayd-event
   webflux:
     base-path: /event-service-api
   data:

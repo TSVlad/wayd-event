@@ -22,8 +22,11 @@ public class SecurityConfig {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http.csrf().disable()
                 .authorizeExchange()
-                .pathMatchers(HttpMethod.GET, "/event-category").permitAll()
-                .pathMatchers("/event-category/**").hasRole("ADMIN")
+                .anyExchange().permitAll()
+//                .pathMatchers(HttpMethod.GET, "/event-category").permitAll()
+//                .pathMatchers("/event-category/all-in-poly").permitAll()
+//                .pathMatchers("/event-category/**").hasRole("ADMIN")
+//                .pathMatchers("/event/**").hasRole("USER")
                 .and().addFilterAt(authenticationWebFilter(), SecurityWebFiltersOrder.AUTHENTICATION)
                 .build();
     }

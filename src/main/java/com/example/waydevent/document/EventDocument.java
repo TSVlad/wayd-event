@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "events")
@@ -26,8 +27,8 @@ public class EventDocument {
     private int minNumberOfParticipants;
     private int maxNumberOfParticipants;
     private LocalDateTime deadline;
-    private List<String> picturesRefs;
+    private List<String> picturesRefs = new ArrayList<>();
     private GeoJsonPoint point;
 
-    private List<Long> participantsIds;
+    private List<Long> participantsIds = new ArrayList<>();
 }
