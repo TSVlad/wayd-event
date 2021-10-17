@@ -1,6 +1,6 @@
 package com.example.waydevent.config;
 
-import com.example.waydevent.messaging.EventEvent;
+import com.example.waydevent.messaging.EventMessage;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.LongSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,13 +34,13 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public ProducerFactory<Long, EventEvent> producerStarshipFactory() {
+    public ProducerFactory<Long, EventMessage> producerStarshipFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
     @Bean
-    public KafkaTemplate<Long, EventEvent> kafkaTemplate() {
-        KafkaTemplate<Long, EventEvent> template = new KafkaTemplate<>(producerStarshipFactory());
+    public KafkaTemplate<Long, EventMessage> kafkaTemplate() {
+        KafkaTemplate<Long, EventMessage> template = new KafkaTemplate<>(producerStarshipFactory());
         template.setMessageConverter(new StringJsonMessageConverter());
         return template;
     }

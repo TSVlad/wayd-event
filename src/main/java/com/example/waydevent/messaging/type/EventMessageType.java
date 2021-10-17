@@ -1,5 +1,5 @@
 package com.example.waydevent.messaging.type;
 
-public enum EventEventType {
+public enum EventMessageType {
     CREATED
 }

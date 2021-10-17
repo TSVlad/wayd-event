@@ -1,6 +1,6 @@
 package com.example.waydevent.config;
 
-import com.example.waydevent.messaging.AbstractEvent;
+import com.example.waydevent.messaging.AbstractMessage;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.LongDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -27,7 +27,7 @@ public class KafkaConsumerConfig {
 
     @Bean
     public KafkaListenerContainerFactory<?> batchFactory() {
-        ConcurrentKafkaListenerContainerFactory<Long, AbstractEvent> factory =
+        ConcurrentKafkaListenerContainerFactory<Long, AbstractMessage> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.setBatchListener(true);
@@ -37,7 +37,7 @@ public class KafkaConsumerConfig {
 
     @Bean
     public KafkaListenerContainerFactory<?> singleFactory() {
-        ConcurrentKafkaListenerContainerFactory<Long, AbstractEvent> factory =
+        ConcurrentKafkaListenerContainerFactory<Long, AbstractMessage> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.setBatchListener(false);
@@ -46,7 +46,7 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConsumerFactory<Long, AbstractEvent> consumerFactory() {
+    public ConsumerFactory<Long, AbstractMessage> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(consumerConfigs());
     }
 
