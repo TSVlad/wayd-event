@@ -20,3 +20,10 @@ spring:
 
 jwt:
   secret: very-secret-key
+
+wayd:
+  kafka:
+    address: localhost:9092
+    groupId: orchestrator
+    producer:
+      id: orchestrator-producer

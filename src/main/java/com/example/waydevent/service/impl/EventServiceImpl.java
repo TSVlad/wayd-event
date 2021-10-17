@@ -1,6 +1,7 @@
 package com.example.waydevent.service.impl;
 
 import com.example.waydevent.document.EventDocument;
+import com.example.waydevent.messaging.producer.EventProducer;
 import com.example.waydevent.repository.EventRepository;
 import com.example.waydevent.restapi.dto.EventDTO;
 import com.example.waydevent.service.EventService;
@@ -17,13 +18,18 @@ public class EventServiceImpl implements EventService {
 
     private final ModelMapper modelMapper;
     private final EventRepository eventRepository;
+    private final EventProducer eventProducer;
 
     @Override
     public Mono<EventDTO> saveEvent(EventDTO eventDTO) {
         EventDocument eventDocument = modelMapper.map(eventDTO, EventDocument.class);
         if (eventDocument.getId() == null) {
             return eventRepository.save(eventDocument)
-                    .map(document -> modelMapper.map(document, EventDTO.class));
+                    .map(document -> {
+                        EventDTO dto = modelMapper.map(document, EventDTO.class);
+                        eventProducer.createEvent(dto);
+                        return dto;
+                    });
         } else {
             return eventRepository.findById(eventDocument.getId())
                     .flatMap(e -> {
