@@ -1,5 +1,6 @@
 package com.example.waydevent.document;
 
+import com.example.waydevent.enums.EventStatus;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
@@ -30,6 +31,7 @@ public class EventDocument {
     private List<String> picturesRefs = new ArrayList<>();
     private GeoJsonPoint point;
 
+    private EventStatus status;
     private long ownerId;
     private List<Long> participantsIds = new ArrayList<>();
 }

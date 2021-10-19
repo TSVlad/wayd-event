@@ -1,6 +1,5 @@
 package com.example.waydevent.messaging.producer;
 
-import com.example.waydevent.messaging.EventMessage;
 import com.example.waydevent.messaging.type.EventMessageType;
 import com.example.waydevent.restapi.dto.EventDTO;
 import lombok.AllArgsConstructor;

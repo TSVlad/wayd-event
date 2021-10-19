@@ -24,6 +24,6 @@ jwt:
 wayd:
   kafka:
     address: localhost:9092
-    groupId: orchestrator
+    groupId: event
     producer:
-      id: orchestrator-producer
+      id: event-producer

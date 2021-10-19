@@ -1,6 +1,6 @@
 package com.example.waydevent.config;
 
-import com.example.waydevent.messaging.EventMessage;
+import com.example.waydevent.messaging.producer.EventMessage;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.LongSerializer;
 import org.springframework.beans.factory.annotation.Value;
