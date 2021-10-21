@@ -1,4 +1,4 @@
-package com.example.waydevent.messaging.consumer;
+package com.example.waydevent.messaging.consumer.dto;
 
 import com.example.waydevent.messaging.AbstractMessage;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EventValidationMessage extends AbstractMessage {
+public class ValidatorMessage extends AbstractMessage {
     private String eventId;
     private boolean isValid;
 }

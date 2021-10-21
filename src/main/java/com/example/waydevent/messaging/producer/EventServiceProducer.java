@@ -1,5 +1,6 @@
 package com.example.waydevent.messaging.producer;
 
+import com.example.waydevent.messaging.producer.dto.EventMessage;
 import com.example.waydevent.messaging.type.EventMessageType;
 import com.example.waydevent.restapi.dto.EventDTO;
 import lombok.AllArgsConstructor;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class EventProducer {
+public class EventServiceProducer {
     private final KafkaTemplate<Long, EventMessage> kafkaStarshipTemplate;
 
     public void createEvent(EventDTO eventDTO) {
@@ -16,6 +17,6 @@ public class EventProducer {
     }
 
     private void send(EventMessage dto) {
-        kafkaStarshipTemplate.send("event-to-orchestrator", dto);
+        kafkaStarshipTemplate.send("event-topic", dto);
     }
 }

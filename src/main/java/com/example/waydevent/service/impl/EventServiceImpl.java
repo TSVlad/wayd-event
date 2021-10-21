@@ -2,7 +2,7 @@ package com.example.waydevent.service.impl;
 
 import com.example.waydevent.document.EventDocument;
 import com.example.waydevent.enums.EventStatus;
-import com.example.waydevent.messaging.producer.EventProducer;
+import com.example.waydevent.messaging.producer.EventServiceProducer;
 import com.example.waydevent.repository.EventRepository;
 import com.example.waydevent.restapi.dto.EventDTO;
 import com.example.waydevent.service.EventService;
@@ -19,7 +19,7 @@ public class EventServiceImpl implements EventService {
 
     private final ModelMapper modelMapper;
     private final EventRepository eventRepository;
-    private final EventProducer eventProducer;
+    private final EventServiceProducer eventServiceProducer;
 
     @Override
     public Mono<EventDTO> saveEvent(EventDTO eventDTO) {
@@ -29,7 +29,7 @@ public class EventServiceImpl implements EventService {
             return eventRepository.save(eventDocument)
                     .map(document -> {
                         EventDTO dto = modelMapper.map(document, EventDTO.class);
-                        eventProducer.createEvent(dto);
+                        eventServiceProducer.createEvent(dto);
                         return dto;
                     });
         } else {
