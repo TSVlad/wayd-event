@@ -4,14 +4,14 @@ import com.example.waydevent.document.EventCategoryDocument;
 import com.example.waydevent.repository.EventCategoryRepository;
 import com.example.waydevent.restapi.dto.EventCategoryDTO;
 import com.example.waydevent.service.EventCategoryService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class EventCategoryServiceImpl implements EventCategoryService {
 
     private final EventCategoryRepository eventCategoryRepository;

@@ -6,15 +6,18 @@ import com.example.waydevent.messaging.producer.EventServiceProducer;
 import com.example.waydevent.repository.EventRepository;
 import com.example.waydevent.restapi.dto.EventDTO;
 import com.example.waydevent.service.EventService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class EventServiceImpl implements EventService {
 
     private final ModelMapper modelMapper;
@@ -33,12 +36,16 @@ public class EventServiceImpl implements EventService {
                         return dto;
                     });
         } else {
-            return eventRepository.findById(eventDocument.getId())
-                    .flatMap(e -> {
-                        eventDocument.setVersion(e.getVersion());
-                        return eventRepository.save(eventDocument);
-                    }).map(document -> modelMapper.map(document, EventDTO.class));
+           return updateEvent(eventDocument);
         }
+    }
+
+    private Mono<EventDTO> updateEvent(EventDocument eventDocument) {
+        return eventRepository.findById(eventDocument.getId())
+                .flatMap(entity -> {
+                    eventDocument.setVersion(entity.getVersion());
+                    return eventRepository.save(eventDocument);
+                }).map(document -> modelMapper.map(document, EventDTO.class));
     }
 
     @Override
@@ -53,6 +60,14 @@ public class EventServiceImpl implements EventService {
                 .doOnNext(eventDocument -> {
                     eventDocument.setStatus(status);
                     eventRepository.save(eventDocument).subscribe();
-                }).subscribe();
+                }).doOnError(OptimisticLockingFailureException.class, exception -> { //Retry in 2 sec if optimistic lock occurs on update
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                    updateStatus(id, status);
+                })
+                .subscribe();
     }
 }
