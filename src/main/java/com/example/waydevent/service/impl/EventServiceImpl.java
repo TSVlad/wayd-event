@@ -13,7 +13,9 @@ import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.util.retry.Retry;
 
+import java.time.Duration;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -60,14 +62,8 @@ public class EventServiceImpl implements EventService {
                 .doOnNext(eventDocument -> {
                     eventDocument.setStatus(status);
                     eventRepository.save(eventDocument).subscribe();
-                }).doOnError(OptimisticLockingFailureException.class, exception -> { //Retry in 2 sec if optimistic lock occurs on update
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException ex) {
-                        ex.printStackTrace();
-                    }
-                    updateStatus(id, status);
                 })
+                .retryWhen(Retry.backoff(50, Duration.ofSeconds(2)).filter(exception -> exception instanceof OptimisticLockingFailureException))
                 .subscribe();
     }
 }
