@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class EventDTO {
+public class EventForCreateAndUpdateDTO {
     private String id;
 
     private String name;
@@ -24,10 +24,4 @@ public class EventDTO {
     private LocalDateTime deadline;
     private List<String> picturesRefs = new ArrayList<>();
     private GeoJsonPoint point;
-
-    private Validity validity;
-    private EventStatus status;
-
-    private long ownerId;
-    private List<Long> participantsIds = new ArrayList<>();
 }

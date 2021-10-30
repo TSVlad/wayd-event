@@ -13,7 +13,17 @@ public class EventServiceProducer {
     private final KafkaTemplate<Long, EventMessage> kafkaStarshipTemplate;
 
     public void createEvent(EventDTO eventDTO) {
-        send(new EventMessage(EventMessageType.CREATED, eventDTO));
+        send(EventMessage.builder()
+                .type(EventMessageType.EVENT_CREATED)
+                .eventDTO(eventDTO)
+                .build());
+    }
+
+    public void updateEvent(EventDTO eventDTO) {
+        send(EventMessage.builder()
+                .type(EventMessageType.EVENT_UPDATED)
+                .eventDTO(eventDTO)
+                .build());
     }
 
     private void send(EventMessage dto) {

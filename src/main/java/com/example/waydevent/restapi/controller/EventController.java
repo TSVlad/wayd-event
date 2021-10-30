@@ -1,6 +1,7 @@
 package com.example.waydevent.restapi.controller;
 
 import com.example.waydevent.restapi.dto.EventDTO;
+import com.example.waydevent.restapi.dto.EventForCreateAndUpdateDTO;
 import com.example.waydevent.service.EventService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
@@ -16,7 +17,7 @@ public class EventController {
     private final EventService eventService;
 
     @PostMapping
-    public Mono<EventDTO> saveEvent(@RequestBody EventDTO eventDTO) {
+    public Mono<EventDTO> saveEvent(@RequestBody EventForCreateAndUpdateDTO eventDTO) {
         return eventService.saveEvent(eventDTO);
     }
 

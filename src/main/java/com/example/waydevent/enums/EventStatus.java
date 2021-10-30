@@ -1,7 +1,10 @@
 package com.example.waydevent.enums;
 
 public enum EventStatus {
-    CREATED,
-    NOT_VALID_BAD_WORD,
-    VALID
+    ON_VALIDATION,
+    ON_MODERATION,
+    ACTIVE,
+    DELETED_WITH_PROFILE_BAN,
+    INVALID
 }
+

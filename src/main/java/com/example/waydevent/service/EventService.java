@@ -1,13 +1,14 @@
 package com.example.waydevent.service;
 
-import com.example.waydevent.enums.EventStatus;
+import com.example.waydevent.messaging.consumer.dto.Validity;
 import com.example.waydevent.restapi.dto.EventDTO;
+import com.example.waydevent.restapi.dto.EventForCreateAndUpdateDTO;
 import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface EventService {
-    Mono<EventDTO> saveEvent(EventDTO eventDTO);
+    Mono<EventDTO> saveEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO);
     Flux<EventDTO> getEventsInPolygon(GeoJsonPolygon polygon);
-    void updateStatus(String id, EventStatus status);
+    void updateValidity(String id, Validity validity);
 }

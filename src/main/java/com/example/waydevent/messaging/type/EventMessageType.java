@@ -1,5 +1,6 @@
 package com.example.waydevent.messaging.type;
 
 public enum EventMessageType {
-    CREATED
+    EVENT_CREATED,
+    EVENT_UPDATED
 }

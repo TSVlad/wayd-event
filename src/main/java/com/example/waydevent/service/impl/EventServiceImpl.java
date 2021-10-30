@@ -1,22 +1,18 @@
 package com.example.waydevent.service.impl;
 
 import com.example.waydevent.document.EventDocument;
-import com.example.waydevent.enums.EventStatus;
+import com.example.waydevent.messaging.consumer.dto.Validity;
 import com.example.waydevent.messaging.producer.EventServiceProducer;
 import com.example.waydevent.repository.EventRepository;
 import com.example.waydevent.restapi.dto.EventDTO;
+import com.example.waydevent.restapi.dto.EventForCreateAndUpdateDTO;
 import com.example.waydevent.service.EventService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.util.retry.Retry;
-
-import java.time.Duration;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @RequiredArgsConstructor
@@ -27,27 +23,34 @@ public class EventServiceImpl implements EventService {
     private final EventServiceProducer eventServiceProducer;
 
     @Override
-    public Mono<EventDTO> saveEvent(EventDTO eventDTO) {
-        EventDocument eventDocument = modelMapper.map(eventDTO, EventDocument.class);
-        if (eventDocument.getId() == null) {
-            eventDocument.setStatus(EventStatus.CREATED);
-            return eventRepository.save(eventDocument)
-                    .map(document -> {
-                        EventDTO dto = modelMapper.map(document, EventDTO.class);
-                        eventServiceProducer.createEvent(dto);
-                        return dto;
-                    });
+    public Mono<EventDTO> saveEvent(EventForCreateAndUpdateDTO eventDTO) {
+        if (eventDTO.getId() == null) {
+           return createEvent(eventDTO);
         } else {
-           return updateEvent(eventDocument);
+           return updateEvent(eventDTO);
         }
     }
 
-    private Mono<EventDTO> updateEvent(EventDocument eventDocument) {
-        return eventRepository.findById(eventDocument.getId())
-                .flatMap(entity -> {
-                    eventDocument.setVersion(entity.getVersion());
+    private Mono<EventDTO> createEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO) {
+        EventDocument eventDocument = EventDocument.createEvent(eventForCreateAndUpdateDTO);
+        return eventRepository.save(eventDocument)
+                .map(document -> {
+                    EventDTO dto = modelMapper.map(document, EventDTO.class);
+                    eventServiceProducer.createEvent(dto);
+                    return dto;
+                });
+    }
+
+    private Mono<EventDTO> updateEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO) {
+        return eventRepository.findById(eventForCreateAndUpdateDTO.getId())
+                .flatMap(eventDocument -> {
+                    eventDocument.updateEvent(eventForCreateAndUpdateDTO);
                     return eventRepository.save(eventDocument);
-                }).map(document -> modelMapper.map(document, EventDTO.class));
+                }).map(document -> {
+                    EventDTO eventDTO = modelMapper.map(document, EventDTO.class);
+                    eventServiceProducer.updateEvent(eventDTO);
+                    return eventDTO;
+                });
     }
 
     @Override
@@ -57,13 +60,11 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public void updateStatus(String id, EventStatus status) {
+    public void updateValidity(String id, Validity validity) {
         eventRepository.findById(id)
                 .doOnNext(eventDocument -> {
-                    eventDocument.setStatus(status);
+                    eventDocument.updateValidity(validity);
                     eventRepository.save(eventDocument).subscribe();
-                })
-                .retryWhen(Retry.backoff(50, Duration.ofSeconds(2)).filter(exception -> exception instanceof OptimisticLockingFailureException))
-                .subscribe();
+                }).subscribe();
     }
 }
