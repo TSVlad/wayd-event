@@ -1,4 +1,4 @@
-package com.example.waydevent.config;
+package com.example.waydevent.config.kafka;
 
 import com.example.waydevent.messaging.producer.dto.EventMessage;
 import org.apache.kafka.clients.producer.ProducerConfig;

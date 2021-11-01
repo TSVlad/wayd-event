@@ -1,4 +1,4 @@
-package com.example.waydevent.config;
+package com.example.waydevent.config.security;
 
 import com.example.waydevent.config.security.JwtAuthenticationManager;
 import com.example.waydevent.config.security.JwtServerAuthenticationConverter;
@@ -22,11 +22,10 @@ public class SecurityConfig {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http.csrf().disable()
                 .authorizeExchange()
+                .pathMatchers(HttpMethod.POST, "/event").hasAnyRole("PERSON", "ORGANIZATION")
+                .pathMatchers(HttpMethod.POST, "/event-category/**").hasRole("ADMIN")
+                .pathMatchers(HttpMethod.DELETE, "/event-category/**").hasRole("ADMIN")
                 .anyExchange().permitAll()
-//                .pathMatchers(HttpMethod.GET, "/event-category").permitAll()
-//                .pathMatchers("/event-category/all-in-poly").permitAll()
-//                .pathMatchers("/event-category/**").hasRole("ADMIN")
-//                .pathMatchers("/event/**").hasRole("USER")
                 .and().addFilterAt(authenticationWebFilter(), SecurityWebFiltersOrder.AUTHENTICATION)
                 .build();
     }
