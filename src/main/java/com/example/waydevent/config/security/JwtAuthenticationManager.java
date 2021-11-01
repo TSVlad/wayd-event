@@ -42,7 +42,7 @@ public class JwtAuthenticationManager implements ReactiveAuthenticationManager {
                     List<SimpleGrantedAuthority> authorities = jwtPayload.getRoles().stream()
                             .map(SimpleGrantedAuthority::new)
                             .collect(Collectors.toList());
-                    Authentication auth = new UsernamePasswordAuthenticationToken(jwtPayload.getUsername(),
+                    Authentication auth = new UsernamePasswordAuthenticationToken(jwtPayload,
                             authentication.getCredentials(), authorities);
                     return auth;
                 }).onErrorResume(e -> {

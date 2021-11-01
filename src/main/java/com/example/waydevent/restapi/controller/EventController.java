@@ -1,8 +1,10 @@
 package com.example.waydevent.restapi.controller;
 
+import com.example.waydevent.config.security.JwtPayload;
 import com.example.waydevent.restapi.dto.EventDTO;
 import com.example.waydevent.restapi.dto.EventForCreateAndUpdateDTO;
 import com.example.waydevent.service.EventService;
+import io.jsonwebtoken.Jwt;
 import lombok.AllArgsConstructor;
 import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
 import org.springframework.security.core.Authentication;
@@ -22,8 +24,9 @@ public class EventController {
 
     @PostMapping
     public Mono<EventDTO> saveEvent(@RequestBody EventForCreateAndUpdateDTO eventDTO, Authentication authentication) {
-        System.out.println(authentication);
-        return eventService.saveEvent(eventDTO);
+        JwtPayload principal = (JwtPayload) authentication.getPrincipal();
+        long ownerId = principal.getId();
+        return eventService.saveEvent(eventDTO, ownerId);
     }
 
     @PostMapping("/all-in-poly")

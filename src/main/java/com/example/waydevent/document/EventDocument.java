@@ -40,10 +40,11 @@ public class EventDocument {
     private long ownerId;
     private List<Long> participantsIds = new ArrayList<>();
 
-    public static EventDocument createEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO) {
+    public static EventDocument createEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, long ownerId) {
         EventDocument eventDocument = MappingUtils.map(eventForCreateAndUpdateDTO, EventDocument.class);
         eventDocument.setStatus(EventStatus.ON_VALIDATION);
         eventDocument.setValidity(Validity.NOT_VALIDATED);
+        eventDocument.setOwnerId(ownerId);
         return eventDocument;
     }
 

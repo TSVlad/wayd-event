@@ -4,6 +4,7 @@ import com.example.waydevent.document.EventDocument;
 import com.example.waydevent.messaging.consumer.dto.Validity;
 import com.example.waydevent.messaging.producer.EventServiceProducer;
 import com.example.waydevent.repository.EventRepository;
+import com.example.waydevent.restapi.controller.advice.exceptions.ForbiddenException;
 import com.example.waydevent.restapi.dto.EventDTO;
 import com.example.waydevent.restapi.dto.EventForCreateAndUpdateDTO;
 import com.example.waydevent.service.EventService;
@@ -23,16 +24,16 @@ public class EventServiceImpl implements EventService {
     private final EventServiceProducer eventServiceProducer;
 
     @Override
-    public Mono<EventDTO> saveEvent(EventForCreateAndUpdateDTO eventDTO) {
+    public Mono<EventDTO> saveEvent(EventForCreateAndUpdateDTO eventDTO, long ownerId) {
         if (eventDTO.getId() == null) {
-           return createEvent(eventDTO);
+           return createEvent(eventDTO, ownerId);
         } else {
-           return updateEvent(eventDTO);
+           return updateEvent(eventDTO, ownerId);
         }
     }
 
-    private Mono<EventDTO> createEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO) {
-        EventDocument eventDocument = EventDocument.createEvent(eventForCreateAndUpdateDTO);
+    private Mono<EventDTO> createEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, long ownerId) {
+        EventDocument eventDocument = EventDocument.createEvent(eventForCreateAndUpdateDTO, ownerId);
         return eventRepository.save(eventDocument)
                 .map(document -> {
                     EventDTO dto = modelMapper.map(document, EventDTO.class);
@@ -41,9 +42,12 @@ public class EventServiceImpl implements EventService {
                 });
     }
 
-    private Mono<EventDTO> updateEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO) {
+    private Mono<EventDTO> updateEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, long ownerId) {
         return eventRepository.findById(eventForCreateAndUpdateDTO.getId())
                 .flatMap(eventDocument -> {
+                    if (ownerId != eventDocument.getOwnerId()) {
+                        return Mono.error(new ForbiddenException());
+                    }
                     eventDocument.updateEvent(eventForCreateAndUpdateDTO);
                     return eventRepository.save(eventDocument);
                 }).map(document -> {

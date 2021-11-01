@@ -8,6 +8,7 @@ import java.util.List;
 
 @Data
 public class JwtPayload {
+    private long id;
     private String username;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate expiredAt;

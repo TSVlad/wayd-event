@@ -8,7 +8,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface EventService {
-    Mono<EventDTO> saveEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO);
+    Mono<EventDTO> saveEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, long ownerId);
     Flux<EventDTO> getEventsInPolygon(GeoJsonPolygon polygon);
     void updateValidity(String id, Validity validity);
 }

@@ -19,7 +19,7 @@ public class EventCategoryController {
     private EventCategoryService eventCategoryService;
 
     @GetMapping()
-    public Flux<EventCategoryDTO> getAllEventCategories(Authentication authentication) {
+    public Flux<EventCategoryDTO> getAllEventCategories() {
         return eventCategoryService.getAllEventCategories();
     }
 
