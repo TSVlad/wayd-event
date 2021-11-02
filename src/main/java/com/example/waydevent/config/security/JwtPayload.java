@@ -10,6 +10,8 @@ import java.util.List;
 public class JwtPayload {
     private long id;
     private String username;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dateOfBirth;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate expiredAt;
     private List<String> roles;
