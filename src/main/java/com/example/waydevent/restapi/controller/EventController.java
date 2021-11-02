@@ -2,9 +2,9 @@ package com.example.waydevent.restapi.controller;
 
 import com.example.waydevent.config.security.JwtPayload;
 import com.example.waydevent.restapi.dto.EventDTO;
+import com.example.waydevent.restapi.dto.EventFilterDTO;
 import com.example.waydevent.restapi.dto.EventForCreateAndUpdateDTO;
 import com.example.waydevent.service.EventService;
-import io.jsonwebtoken.Jwt;
 import lombok.AllArgsConstructor;
 import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
 import org.springframework.security.core.Authentication;
@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/event")
@@ -30,8 +32,12 @@ public class EventController {
     }
 
     @PostMapping("/all-in-poly")
-    public Flux<EventDTO> getEventsInPolygon(@RequestBody GeoJsonPolygon geoJsonPolygon) {
-        return eventService.getEventsInPolygon(geoJsonPolygon);
+    public Flux<EventDTO> getEventsInPolygon(@RequestBody EventFilterDTO eventFilterDTO, Authentication authentication) {
+        LocalDate dateOfBirth = null;
+        if (authentication != null) {
+            dateOfBirth = ((JwtPayload)authentication.getPrincipal()).getDateOfBirth();
+        }
+        return eventService.getEventsInPolygonForFilters(eventFilterDTO, dateOfBirth);
     }
 
 }
