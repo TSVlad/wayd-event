@@ -13,5 +13,6 @@ import java.time.LocalDate;
 public interface EventService {
     Mono<EventDTO> saveEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, long ownerId);
     Flux<EventDTO> getEventsInPolygonForFilters(EventFilterDTO eventFilterDTO, LocalDate finderDateOfBirth);
+    Flux<EventDTO> getEventsForUserId(long id);
     void updateValidity(String id, Validity validity);
 }

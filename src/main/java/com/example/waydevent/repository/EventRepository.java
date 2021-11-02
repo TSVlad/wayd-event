@@ -13,4 +13,6 @@ import java.time.LocalDateTime;
 public interface EventRepository extends ReactiveMongoRepository<EventDocument, String> {
 
     Flux<EventDocument> findAllByPointWithinAndDateTimeAfter(GeoJsonPolygon geoJsonPolygon, LocalDateTime dateTime);
+
+    Flux<EventDocument> findAllByOwnerId(long id);
 }

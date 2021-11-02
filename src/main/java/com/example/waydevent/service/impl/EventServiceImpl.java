@@ -69,6 +69,11 @@ public class EventServiceImpl implements EventService {
                 .map(document -> modelMapper.map(document, EventDTO.class));
     }
 
+    @Override
+    public Flux<EventDTO> getEventsForUserId(long id) {
+        return eventRepository.findAllByOwnerId(id).filter(event -> event.getStatus() == EventStatus.ACTIVE).map(document -> modelMapper.map(document, EventDTO.class));
+    }
+
     private Flux<EventDocument> filter(Flux<EventDocument> eventDTOFlux, EventFilterDTO eventFilterDTO, LocalDate finderDateOfBirth) {
         return eventDTOFlux.filter(event -> {
             if (eventFilterDTO.getCategory() != null) {

@@ -8,10 +8,7 @@ import com.example.waydevent.service.EventService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -40,4 +37,8 @@ public class EventController {
         return eventService.getEventsInPolygonForFilters(eventFilterDTO, dateOfBirth);
     }
 
+    @GetMapping("/user/{id}")
+    public Flux<EventDTO> getEventsForUserId(@PathVariable long id) {
+        return eventService.getEventsForUserId(id);
+    }
 }
