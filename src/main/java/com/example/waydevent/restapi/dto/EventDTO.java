@@ -24,6 +24,8 @@ public class EventDTO {
     private LocalDateTime deadline;
     private List<String> picturesRefs = new ArrayList<>();
     private GeoJsonPoint point;
+    private int minAge;
+    private int maxAge;
 
     private Validity validity;
     private EventStatus status;

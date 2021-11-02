@@ -10,6 +10,7 @@ import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,8 @@ public class EventDocument {
     private LocalDateTime deadline;
     private List<String> picturesRefs = new ArrayList<>();
     private GeoJsonPoint point;
+    private int minAge;
+    private int maxAge;
 
     private Validity validity;
     private EventStatus status;
