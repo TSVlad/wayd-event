@@ -4,7 +4,6 @@ import com.example.waydevent.restapi.dto.EventCategoryDTO;
 import com.example.waydevent.service.EventCategoryService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
