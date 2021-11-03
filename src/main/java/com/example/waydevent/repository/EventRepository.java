@@ -6,8 +6,8 @@ import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Repository
 public interface EventRepository extends ReactiveMongoRepository<EventDocument, String> {
@@ -15,4 +15,6 @@ public interface EventRepository extends ReactiveMongoRepository<EventDocument, 
     Flux<EventDocument> findAllByPointWithinAndDateTimeAfter(GeoJsonPolygon geoJsonPolygon, LocalDateTime dateTime);
 
     Flux<EventDocument> findAllByOwnerId(long id);
+
+    Flux<EventDocument> findAllByIdIn(List<String> ids);
 }

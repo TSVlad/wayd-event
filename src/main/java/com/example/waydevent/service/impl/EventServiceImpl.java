@@ -10,9 +10,9 @@ import com.example.waydevent.restapi.dto.EventDTO;
 import com.example.waydevent.restapi.dto.EventFilterDTO;
 import com.example.waydevent.restapi.dto.EventForCreateAndUpdateDTO;
 import com.example.waydevent.service.EventService;
+import com.example.waydevent.util.MappingUtils;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -20,6 +20,7 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -72,6 +73,11 @@ public class EventServiceImpl implements EventService {
     @Override
     public Flux<EventDTO> getEventsForUserId(long id) {
         return eventRepository.findAllByOwnerId(id).filter(event -> event.getStatus() == EventStatus.ACTIVE).map(document -> modelMapper.map(document, EventDTO.class));
+    }
+
+    @Override
+    public Flux<EventDTO> getEventsForIds(List<String> ids) {
+        return eventRepository.findAllByIdIn(ids).map(eventDocument -> MappingUtils.map(eventDocument, EventDTO.class));
     }
 
     private Flux<EventDocument> filter(Flux<EventDocument> eventDTOFlux, EventFilterDTO eventFilterDTO, LocalDate finderDateOfBirth) {

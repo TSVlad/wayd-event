@@ -13,6 +13,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/event")
@@ -40,5 +41,10 @@ public class EventController {
     @GetMapping("/user/{id}")
     public Flux<EventDTO> getEventsForUserId(@PathVariable long id) {
         return eventService.getEventsForUserId(id);
+    }
+
+    @PostMapping("/for-ids")
+    public Flux<EventDTO> getEventsForIds(@RequestBody List<String> ids) {
+        return eventService.getEventsForIds(ids);
     }
 }
