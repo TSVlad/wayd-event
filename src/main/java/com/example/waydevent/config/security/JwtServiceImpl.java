@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 @Service
-public class JwtServiceImpl implements JwtService<JwtPayload>{
+public class JwtServiceImpl implements JwtService<JwtPayload> {
 
     @Value("${jwt.secret}")
     private String jwtSecret;

@@ -34,9 +34,9 @@ public class EventServiceImpl implements EventService {
     @Override
     public Mono<EventDTO> saveEvent(EventForCreateAndUpdateDTO eventDTO, long ownerId) {
         if (eventDTO.getId() == null) {
-           return createEvent(eventDTO, ownerId);
+            return createEvent(eventDTO, ownerId);
         } else {
-           return updateEvent(eventDTO, ownerId);
+            return updateEvent(eventDTO, ownerId);
         }
     }
 
@@ -103,9 +103,9 @@ public class EventServiceImpl implements EventService {
                 }
             }
             if (eventFilterDTO.getDateAfter() != null) {
-                 if (!event.getDateTime().isAfter(eventFilterDTO.getDateAfter().atStartOfDay())) {
-                     return false;
-                 }
+                if (!event.getDateTime().isAfter(eventFilterDTO.getDateAfter().atStartOfDay())) {
+                    return false;
+                }
             }
             if (eventFilterDTO.getDateBefore() != null) {
                 if (!event.getDateTime().isBefore(eventFilterDTO.getDateBefore().plus(1, ChronoUnit.DAYS).atStartOfDay())) {

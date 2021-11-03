@@ -1,7 +1,5 @@
 package com.example.waydevent.config.security;
 
-import com.example.waydevent.config.security.JwtAuthenticationManager;
-import com.example.waydevent.config.security.JwtServerAuthenticationConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;

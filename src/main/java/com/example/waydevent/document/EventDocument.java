@@ -86,7 +86,7 @@ public class EventDocument {
 
     public void addParticipant(JwtPayload userInfo) {
         if (userInfo.getDateOfBirth().isAfter(this.dateTime.toLocalDate().minus(this.minAge, ChronoUnit.YEARS))
-        || userInfo.getDateOfBirth().isBefore(this.dateTime.toLocalDate().minus(this.maxAge, ChronoUnit.YEARS))) {
+                || userInfo.getDateOfBirth().isBefore(this.dateTime.toLocalDate().minus(this.maxAge, ChronoUnit.YEARS))) {
             throw new InvalidAgeException();
         }
 

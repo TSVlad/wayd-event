@@ -28,7 +28,7 @@ public class EventCategoryServiceImpl implements EventCategoryService {
             return eventCategoryRepository.save(modelMapper.map(eventCategoryDTO, EventCategoryDocument.class))
                     .map(document -> modelMapper.map(document, EventCategoryDTO.class));
         } else {
-            return  eventCategoryRepository.findById(eventCategoryDTO.getId())
+            return eventCategoryRepository.findById(eventCategoryDTO.getId())
                     .flatMap(ec -> {
                         EventCategoryDocument document = modelMapper.map(eventCategoryDTO, EventCategoryDocument.class);
                         document.setVersion(ec.getVersion());

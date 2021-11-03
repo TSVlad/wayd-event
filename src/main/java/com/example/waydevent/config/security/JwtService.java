@@ -6,5 +6,6 @@ import io.jsonwebtoken.Jws;
 
 public interface JwtService<T> {
     Jws<Claims> validateJwt(String token);
+
     T deserializeTokenTo(String token, Class<T> clazz) throws JsonProcessingException;
 }

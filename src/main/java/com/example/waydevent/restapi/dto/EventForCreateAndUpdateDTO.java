@@ -1,7 +1,5 @@
 package com.example.waydevent.restapi.dto;
 
-import com.example.waydevent.enums.EventStatus;
-import com.example.waydevent.messaging.consumer.dto.Validity;
 import lombok.Data;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 

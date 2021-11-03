@@ -3,7 +3,9 @@ package com.example.waydevent.messaging.producer.dto;
 import com.example.waydevent.messaging.AbstractMessage;
 import com.example.waydevent.messaging.type.EventMessageType;
 import com.example.waydevent.restapi.dto.EventDTO;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

@@ -6,6 +6,8 @@ import reactor.core.publisher.Mono;
 
 public interface EventCategoryService {
     Flux<EventCategoryDTO> getAllEventCategories();
+
     Mono<EventCategoryDTO> saveEventCategory(EventCategoryDTO eventCategoryDTO);
+
     Mono<Void> deleteEventCategory(String id);
 }

@@ -17,7 +17,7 @@ public class ExceptionsHandler {
 
     @ExceptionHandler({TooManyParticipantsException.class, InvalidAgeException.class})
     ResponseEntity<String> conflictHandle(Exception e) {
-        return new ResponseEntity<>(getExceptionName(e),  HttpStatus.CONFLICT);
+        return new ResponseEntity<>(getExceptionName(e), HttpStatus.CONFLICT);
     }
 
     private String getExceptionName(Exception e) {

@@ -6,7 +6,6 @@ import com.example.waydevent.restapi.dto.EventFilterDTO;
 import com.example.waydevent.restapi.dto.EventForCreateAndUpdateDTO;
 import com.example.waydevent.service.EventService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -33,7 +32,7 @@ public class EventController {
     public Flux<EventDTO> getEventsInPolygon(@RequestBody EventFilterDTO eventFilterDTO, Authentication authentication) {
         LocalDate dateOfBirth = null;
         if (authentication != null) {
-            dateOfBirth = ((JwtPayload)authentication.getPrincipal()).getDateOfBirth();
+            dateOfBirth = ((JwtPayload) authentication.getPrincipal()).getDateOfBirth();
         }
         return eventService.getEventsInPolygonForFilters(eventFilterDTO, dateOfBirth);
     }
