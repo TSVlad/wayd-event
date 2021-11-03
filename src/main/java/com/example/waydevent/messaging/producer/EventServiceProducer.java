@@ -26,6 +26,14 @@ public class EventServiceProducer {
                 .build());
     }
 
+    public void newParticipant(EventDTO eventDTO, long userId) {
+        send(EventMessage.builder()
+                .type(EventMessageType.NEW_PARTICIPANT)
+                .eventDTO(eventDTO)
+                .userId(userId)
+                .build());
+    }
+
     private void send(EventMessage dto) {
         kafkaStarshipTemplate.send("event-topic", dto);
     }

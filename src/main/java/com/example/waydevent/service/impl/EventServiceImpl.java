@@ -87,7 +87,11 @@ public class EventServiceImpl implements EventService {
                 .flatMap(eventDocument -> {
                     eventDocument.addParticipant(userInfo);
                     return eventRepository.save(eventDocument);
-                }).map(eventDocument -> MappingUtils.map(eventDocument, EventDTO.class));
+                }).map(eventDocument -> {
+                    EventDTO dto = MappingUtils.map(eventDocument, EventDTO.class);
+                    eventServiceProducer.newParticipant(dto, userInfo.getId());
+                    return dto;
+                });
     }
 
     private Flux<EventDocument> filter(Flux<EventDocument> eventDTOFlux, EventFilterDTO eventFilterDTO, LocalDate finderDateOfBirth) {

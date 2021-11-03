@@ -13,4 +13,5 @@ import lombok.EqualsAndHashCode;
 public class EventMessage extends AbstractMessage {
     private EventMessageType type;
     private EventDTO eventDTO;
+    private long userId;
 }
