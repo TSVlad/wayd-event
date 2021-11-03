@@ -4,9 +4,12 @@ import com.example.waydevent.restapi.dto.EventCategoryDTO;
 import com.example.waydevent.service.EventCategoryService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/event-category")
@@ -21,7 +24,7 @@ public class EventCategoryController {
     }
 
     @PostMapping()
-    public Mono<EventCategoryDTO> saveEventCategory(@RequestBody EventCategoryDTO eventCategoryDTO) {
+    public Mono<EventCategoryDTO> saveEventCategory(@Valid @RequestBody EventCategoryDTO eventCategoryDTO) {
         return eventCategoryService.saveEventCategory(eventCategoryDTO);
     }
 

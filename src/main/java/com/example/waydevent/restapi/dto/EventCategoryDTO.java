@@ -4,6 +4,8 @@ import com.example.waydevent.document.EventCategoryDocument;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
@@ -11,6 +13,8 @@ import java.util.List;
 public class EventCategoryDTO {
     private String id;
 
+    @NotEmpty(message = "categoryName can not be empty")
+    @NotNull(message = "categoryName can not be null")
     private String categoryName;
     private List<String> subCategories;
 
