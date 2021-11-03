@@ -47,4 +47,10 @@ public class EventController {
     public Flux<EventDTO> getEventsForIds(@RequestBody List<String> ids) {
         return eventService.getEventsForIds(ids);
     }
+
+    @PostMapping("/participate/{eventId}")
+    public Mono<EventDTO> participate(@PathVariable String eventId, Authentication authentication) {
+        JwtPayload jwtPayload = (JwtPayload) authentication.getPrincipal();
+        return eventService.addParticipant(eventId, jwtPayload);
+    }
 }

@@ -1,7 +1,10 @@
 package com.example.waydevent.document;
 
+import com.example.waydevent.config.security.JwtPayload;
 import com.example.waydevent.enums.EventStatus;
 import com.example.waydevent.messaging.consumer.dto.Validity;
+import com.example.waydevent.restapi.controller.advice.exceptions.InvalidAgeException;
+import com.example.waydevent.restapi.controller.advice.exceptions.TooManyParticipantsException;
 import com.example.waydevent.restapi.dto.EventForCreateAndUpdateDTO;
 import com.example.waydevent.util.MappingUtils;
 import lombok.Data;
@@ -10,10 +13,12 @@ import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Document(collection = "events")
 @Data
@@ -41,7 +46,7 @@ public class EventDocument {
     private EventStatus status;
 
     private long ownerId;
-    private List<Long> participantsIds = new ArrayList<>();
+    private Set<Long> participantsIds = new HashSet<>();
 
     public static EventDocument createEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, long ownerId) {
         EventDocument eventDocument = MappingUtils.map(eventForCreateAndUpdateDTO, EventDocument.class);
@@ -77,5 +82,18 @@ public class EventDocument {
             case NOT_VALID:
                 this.status = EventStatus.INVALID;
         }
+    }
+
+    public void addParticipant(JwtPayload userInfo) {
+        if (userInfo.getDateOfBirth().isAfter(this.dateTime.toLocalDate().minus(this.minAge, ChronoUnit.YEARS))
+        || userInfo.getDateOfBirth().isBefore(this.dateTime.toLocalDate().minus(this.maxAge, ChronoUnit.YEARS))) {
+            throw new InvalidAgeException();
+        }
+
+        if (this.maxNumberOfParticipants != 0 && this.participantsIds.size() >= this.maxNumberOfParticipants) {
+            throw new TooManyParticipantsException();
+        }
+
+        this.participantsIds.add(userInfo.getId());
     }
 }

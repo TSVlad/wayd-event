@@ -1,5 +1,6 @@
 package com.example.waydevent.service.impl;
 
+import com.example.waydevent.config.security.JwtPayload;
 import com.example.waydevent.document.EventDocument;
 import com.example.waydevent.enums.EventStatus;
 import com.example.waydevent.messaging.consumer.dto.Validity;
@@ -78,6 +79,15 @@ public class EventServiceImpl implements EventService {
     @Override
     public Flux<EventDTO> getEventsForIds(List<String> ids) {
         return eventRepository.findAllByIdIn(ids).map(eventDocument -> MappingUtils.map(eventDocument, EventDTO.class));
+    }
+
+    @Override
+    public Mono<EventDTO> addParticipant(String eventId, JwtPayload userInfo) {
+        return eventRepository.findById(eventId)
+                .flatMap(eventDocument -> {
+                    eventDocument.addParticipant(userInfo);
+                    return eventRepository.save(eventDocument);
+                }).map(eventDocument -> MappingUtils.map(eventDocument, EventDTO.class));
     }
 
     private Flux<EventDocument> filter(Flux<EventDocument> eventDTOFlux, EventFilterDTO eventFilterDTO, LocalDate finderDateOfBirth) {

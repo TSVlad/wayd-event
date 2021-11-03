@@ -25,6 +25,7 @@ public class SecurityConfig {
                 .pathMatchers(HttpMethod.POST, "/event").hasAnyRole("PERSON", "ORGANIZATION")
                 .pathMatchers(HttpMethod.POST, "/event-category/**").hasRole("ADMIN")
                 .pathMatchers(HttpMethod.DELETE, "/event-category/**").hasRole("ADMIN")
+                .pathMatchers("/event/participate/**").hasRole("PERSON")
                 .anyExchange().permitAll()
                 .and().addFilterAt(authenticationWebFilter(), SecurityWebFiltersOrder.AUTHENTICATION)
                 .build();
