@@ -32,35 +32,35 @@ public class EventServiceImpl implements EventService {
     private final EventServiceProducer eventServiceProducer;
 
     @Override
-    public Mono<EventDTO> saveEvent(EventForCreateAndUpdateDTO eventDTO, long ownerId) {
+    public Mono<EventDTO> saveEvent(EventForCreateAndUpdateDTO eventDTO, JwtPayload userInfo) {
         if (eventDTO.getId() == null) {
-            return createEvent(eventDTO, ownerId);
+            return createEvent(eventDTO, userInfo);
         } else {
-            return updateEvent(eventDTO, ownerId);
+            return updateEvent(eventDTO, userInfo);
         }
     }
 
-    private Mono<EventDTO> createEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, long ownerId) {
-        EventDocument eventDocument = EventDocument.createEvent(eventForCreateAndUpdateDTO, ownerId);
+    private Mono<EventDTO> createEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, JwtPayload userInfo) {
+        EventDocument eventDocument = EventDocument.createEvent(eventForCreateAndUpdateDTO, userInfo.getId());
         return eventRepository.save(eventDocument)
                 .map(document -> {
                     EventDTO dto = modelMapper.map(document, EventDTO.class);
-                    eventServiceProducer.createEvent(dto);
+                    eventServiceProducer.createEvent(dto, userInfo);
                     return dto;
                 });
     }
 
-    private Mono<EventDTO> updateEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, long ownerId) {
+    private Mono<EventDTO> updateEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, JwtPayload userInfo) {
         return eventRepository.findById(eventForCreateAndUpdateDTO.getId())
                 .flatMap(eventDocument -> {
-                    if (ownerId != eventDocument.getOwnerId()) {
+                    if (userInfo.getId() != eventDocument.getOwnerId()) {
                         return Mono.error(new ForbiddenException());
                     }
                     eventDocument.updateEvent(eventForCreateAndUpdateDTO);
                     return eventRepository.save(eventDocument);
                 }).map(document -> {
                     EventDTO eventDTO = modelMapper.map(document, EventDTO.class);
-                    eventServiceProducer.updateEvent(eventDTO);
+                    eventServiceProducer.updateEvent(eventDTO, userInfo);
                     return eventDTO;
                 });
     }
@@ -130,11 +130,12 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public void updateValidity(String id, Validity validity) {
-        eventRepository.findById(id)
-                .doOnNext(eventDocument -> {
-                    eventDocument.updateValidity(validity);
-                    eventRepository.save(eventDocument).subscribe();
-                }).subscribe();
+    public void updateValidity(String id, Validity validity, JwtPayload userInfo) {
+        eventRepository.findById(id).flatMap(eventDocument -> {
+            eventDocument.updateValidity(validity);
+            return eventRepository.save(eventDocument);
+        }).doOnNext(eventDocument -> {
+            eventServiceProducer.eventValidated(modelMapper.map(eventDocument, EventDTO.class), userInfo);
+        }).subscribe();
     }
 }

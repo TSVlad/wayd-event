@@ -15,7 +15,7 @@ public class ValidatorConsumer {
     @KafkaListener(topics = {"validator-to-event"}, containerFactory = "singleFactory")
     public void consume(ValidatorMessage validatorMessage) {
         if (validatorMessage.getType() == ValidatorMessageType.EVENT_VALIDATED) {
-            eventService.updateValidity(validatorMessage.getEventId(), validatorMessage.getValidity());
+            eventService.updateValidity(validatorMessage.getEventId(), validatorMessage.getValidity(), validatorMessage.getUserInfo());
         }
     }
 }

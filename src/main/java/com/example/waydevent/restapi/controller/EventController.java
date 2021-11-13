@@ -7,6 +7,7 @@ import com.example.waydevent.restapi.dto.EventForCreateAndUpdateDTO;
 import com.example.waydevent.service.EventService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -25,10 +26,8 @@ public class EventController {
     private final EventService eventService;
 
     @PostMapping
-    public Mono<EventDTO> saveEvent(@Valid @RequestBody EventForCreateAndUpdateDTO eventDTO, Authentication authentication) {
-        JwtPayload principal = (JwtPayload) authentication.getPrincipal();
-        long ownerId = principal.getId();
-        return eventService.saveEvent(eventDTO, ownerId);
+    public Mono<EventDTO> saveEvent(@Valid @RequestBody EventForCreateAndUpdateDTO eventDTO, @AuthenticationPrincipal JwtPayload userInfo) {
+        return eventService.saveEvent(eventDTO, userInfo);
     }
 
     @PostMapping("/all-in-poly")

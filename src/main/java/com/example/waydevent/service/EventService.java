@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface EventService {
-    Mono<EventDTO> saveEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, long ownerId);
+    Mono<EventDTO> saveEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, JwtPayload userInfo);
 
     Flux<EventDTO> getEventsInPolygonForFilters(EventFilterDTO eventFilterDTO, LocalDate finderDateOfBirth);
 
@@ -22,5 +22,5 @@ public interface EventService {
 
     Mono<EventDTO> addParticipant(String eventId, JwtPayload userInfo);
 
-    void updateValidity(String id, Validity validity);
+    void updateValidity(String id, Validity validity, JwtPayload userInfo);
 }

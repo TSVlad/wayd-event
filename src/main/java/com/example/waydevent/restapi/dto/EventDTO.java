@@ -7,11 +7,14 @@ import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 public class EventDTO {
     private String id;
+    private long version;
 
     private String name;
     private String description;
@@ -31,5 +34,5 @@ public class EventDTO {
     private EventStatus status;
 
     private long ownerId;
-    private List<Long> participantsIds = new ArrayList<>();
+    private Set<Long> participantsIds = new HashSet<>();
 }
