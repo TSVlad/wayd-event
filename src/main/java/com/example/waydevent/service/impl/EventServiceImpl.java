@@ -19,7 +19,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -67,7 +67,8 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Flux<EventDTO> getEventsInPolygonForFilters(EventFilterDTO eventFilterDTO, LocalDate finderDateOfBirth) {
-        return filter(eventRepository.findAllByPointWithinAndDateTimeAfter(eventFilterDTO.getGeoJsonPolygon(), LocalDateTime.now()).filter(event -> event.getStatus() == EventStatus.ACTIVE), eventFilterDTO, finderDateOfBirth)
+        return filter(eventRepository.findAllByPointWithinAndDateTimeAfter(eventFilterDTO.getGeoJsonPolygon(), ZonedDateTime.now())
+                .filter(event -> event.getStatus() == EventStatus.ACTIVE), eventFilterDTO, finderDateOfBirth)
                 .map(document -> modelMapper.map(document, EventDTO.class));
     }
 
@@ -107,12 +108,12 @@ public class EventServiceImpl implements EventService {
                 }
             }
             if (eventFilterDTO.getDateAfter() != null) {
-                if (!event.getDateTime().isAfter(eventFilterDTO.getDateAfter().atStartOfDay())) {
+                if (!event.getDateTime().isAfter(eventFilterDTO.getDateAfter())) {
                     return false;
                 }
             }
             if (eventFilterDTO.getDateBefore() != null) {
-                if (!event.getDateTime().isBefore(eventFilterDTO.getDateBefore().plus(1, ChronoUnit.DAYS).atStartOfDay())) {
+                if (!event.getDateTime().isBefore(eventFilterDTO.getDateBefore().plus(1, ChronoUnit.DAYS))) {
                     return false;
                 }
             }
@@ -123,7 +124,7 @@ public class EventServiceImpl implements EventService {
                 }
             }
             if (event.getDeadline() != null) {
-                event.getDeadline().isAfter(LocalDateTime.now());
+                event.getDeadline().isAfter(ZonedDateTime.now());
             }
             return true;
         });

@@ -13,7 +13,7 @@ import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -33,10 +33,10 @@ public class EventDocument {
     private String contacts;
     private String category;
     private String subCategory;
-    private LocalDateTime dateTime;
+    private ZonedDateTime dateTime;
     private int minNumberOfParticipants;
     private int maxNumberOfParticipants;
-    private LocalDateTime deadline;
+    private ZonedDateTime deadline;
     private List<String> picturesRefs = new ArrayList<>();
     private GeoJsonPoint point;
     private int minAge;
