@@ -1,7 +1,9 @@
 package com.example.waydevent.document;
 
 import com.example.waydevent.config.security.JwtPayload;
+import com.example.waydevent.config.security.Role;
 import com.example.waydevent.enums.EventStatus;
+import com.example.waydevent.enums.EventType;
 import com.example.waydevent.messaging.consumer.dto.Validity;
 import com.example.waydevent.restapi.controller.advice.exceptions.InvalidAgeException;
 import com.example.waydevent.restapi.controller.advice.exceptions.TooManyParticipantsException;
@@ -42,17 +44,25 @@ public class EventDocument {
     private int minAge;
     private int maxAge;
 
+    private EventType type;
     private Validity validity;
     private EventStatus status;
 
     private long ownerId;
     private Set<Long> participantsIds = new HashSet<>();
 
-    public static EventDocument createEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, long ownerId) {
+    public static EventDocument createEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, JwtPayload userInfo) {
         EventDocument eventDocument = MappingUtils.map(eventForCreateAndUpdateDTO, EventDocument.class);
         eventDocument.setStatus(EventStatus.ON_VALIDATION);
         eventDocument.setValidity(Validity.NOT_VALIDATED);
-        eventDocument.setOwnerId(ownerId);
+        eventDocument.setOwnerId(userInfo.getId());
+
+        if (userInfo.getRoles().contains(Role.ROLE_ORGANIZATION)) {
+            eventDocument.setType(EventType.ORGANIZATIONAL);
+        } else {
+            eventDocument.setType(EventType.PERSONAL);
+        }
+
         return eventDocument;
     }
 

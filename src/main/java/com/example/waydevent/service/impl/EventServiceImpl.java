@@ -41,7 +41,7 @@ public class EventServiceImpl implements EventService {
     }
 
     private Mono<EventDTO> createEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, JwtPayload userInfo) {
-        EventDocument eventDocument = EventDocument.createEvent(eventForCreateAndUpdateDTO, userInfo.getId());
+        EventDocument eventDocument = EventDocument.createEvent(eventForCreateAndUpdateDTO, userInfo);
         return eventRepository.save(eventDocument)
                 .map(document -> {
                     EventDTO dto = modelMapper.map(document, EventDTO.class);
