@@ -1,6 +1,8 @@
 package com.example.waydevent.service;
 
+import com.example.waydevent.business.RateEvent;
 import com.example.waydevent.config.security.JwtPayload;
+import com.example.waydevent.document.EventDocument;
 import com.example.waydevent.messaging.consumer.dto.Validity;
 import com.example.waydevent.restapi.dto.EventDTO;
 import com.example.waydevent.restapi.dto.EventFilterDTO;
@@ -23,4 +25,6 @@ public interface EventService {
     Mono<EventDTO> addParticipant(String eventId, JwtPayload userInfo);
 
     void updateValidity(String id, Validity validity, JwtPayload userInfo);
+
+    Mono<EventDocument> rateEvent(RateEvent rateEvent, long id);
 }

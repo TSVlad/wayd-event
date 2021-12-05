@@ -1,5 +1,6 @@
 package com.example.waydevent.service.impl;
 
+import com.example.waydevent.business.RateEvent;
 import com.example.waydevent.config.security.JwtPayload;
 import com.example.waydevent.document.EventDocument;
 import com.example.waydevent.enums.EventStatus;
@@ -21,6 +22,7 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -138,5 +140,20 @@ public class EventServiceImpl implements EventService {
         }).doOnNext(eventDocument -> {
             eventServiceProducer.eventValidated(modelMapper.map(eventDocument, EventDTO.class), userInfo);
         }).subscribe();
+    }
+
+    @Override
+    public Mono<EventDocument> rateEvent(RateEvent rateEvent, long id) {
+        return eventRepository.findById(rateEvent.getEventId()).flatMap(eventDocument -> {
+            if (eventDocument.getDateTime().isAfter(ZonedDateTime.now())
+                    || !eventDocument.getParticipantsIds().contains(id)) {
+                return Mono.error(new ForbiddenException());
+            }
+            if (eventDocument.getRates() == null) {
+                eventDocument.setRates(new HashMap<>());
+            }
+            eventDocument.getRates().put(id, rateEvent.getRate());
+            return eventRepository.save(eventDocument);
+        });
     }
 }

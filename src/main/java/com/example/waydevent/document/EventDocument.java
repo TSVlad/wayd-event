@@ -17,10 +17,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Document(collection = "events")
 @Data
@@ -50,6 +47,8 @@ public class EventDocument {
 
     private long ownerId;
     private Set<Long> participantsIds = new HashSet<>();
+
+    private Map<Long, Integer> rates = new HashMap<>();
 
     public static EventDocument createEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, JwtPayload userInfo) {
         EventDocument eventDocument = MappingUtils.map(eventForCreateAndUpdateDTO, EventDocument.class);

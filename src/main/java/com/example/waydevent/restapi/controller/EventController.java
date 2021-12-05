@@ -1,11 +1,14 @@
 package com.example.waydevent.restapi.controller;
 
+import com.example.waydevent.business.RateEvent;
 import com.example.waydevent.config.security.JwtPayload;
 import com.example.waydevent.restapi.dto.EventDTO;
 import com.example.waydevent.restapi.dto.EventFilterDTO;
 import com.example.waydevent.restapi.dto.EventForCreateAndUpdateDTO;
+import com.example.waydevent.restapi.dto.RateEventDTO;
 import com.example.waydevent.service.EventService;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +27,7 @@ import java.util.List;
 public class EventController {
 
     private final EventService eventService;
+    private final ModelMapper modelMapper;
 
     @PostMapping
     public Mono<EventDTO> saveEvent(@Valid @RequestBody EventForCreateAndUpdateDTO eventDTO, @AuthenticationPrincipal JwtPayload userInfo) {
@@ -53,5 +57,11 @@ public class EventController {
     public Mono<EventDTO> participate(@NotNull @NotEmpty @PathVariable String eventId, Authentication authentication) {
         JwtPayload jwtPayload = (JwtPayload) authentication.getPrincipal();
         return eventService.addParticipant(eventId, jwtPayload);
+    }
+
+    @PostMapping("/rate")
+    public Mono<EventDTO> rateEvent(@RequestBody RateEventDTO rateEventDTO, @AuthenticationPrincipal JwtPayload userInfo) {
+        return eventService.rateEvent(modelMapper.map(rateEventDTO, RateEvent.class), userInfo.getId())
+                .map(eventDocument -> modelMapper.map(eventDocument, EventDTO.class));
     }
 }
