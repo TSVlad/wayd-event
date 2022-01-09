@@ -121,7 +121,7 @@ public class EventServiceImpl implements EventService {
             }
             if (finderDateOfBirth != null) {
                 if (!LocalDate.now().minus(event.getMinAge(), ChronoUnit.YEARS).isAfter(finderDateOfBirth) ||
-                        !LocalDate.now().minus(event.getMaxAge(), ChronoUnit.YEARS).isBefore(finderDateOfBirth)) {
+                        event.getMaxAge() > 0 && !LocalDate.now().minus(event.getMaxAge(), ChronoUnit.YEARS).isBefore(finderDateOfBirth)) {
                     return false;
                 }
             }
