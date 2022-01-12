@@ -85,6 +85,11 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public Mono<EventDocument> getEventById(String id) {
+        return eventRepository.findById(id);
+    }
+
+    @Override
     public Mono<EventDTO> addParticipant(String eventId, JwtPayload userInfo) {
         return eventRepository.findById(eventId)
                 .flatMap(eventDocument -> {

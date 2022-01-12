@@ -53,6 +53,11 @@ public class EventController {
         return eventService.getEventsForIds(ids);
     }
 
+    @GetMapping("/{id}")
+    public Mono<EventDTO> getEventById(@PathVariable String id) { //TODO: secure (check for ACTIVE or owner)
+        return eventService.getEventById(id).map(eventDocument -> modelMapper.map(eventDocument, EventDTO.class));
+    }
+
     @PostMapping("/participate/{eventId}")
     public Mono<EventDTO> participate(@NotNull @NotEmpty @PathVariable String eventId, Authentication authentication) {
         JwtPayload jwtPayload = (JwtPayload) authentication.getPrincipal();

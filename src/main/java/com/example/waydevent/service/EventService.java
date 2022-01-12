@@ -22,6 +22,8 @@ public interface EventService {
 
     Flux<EventDTO> getEventsForIds(List<String> ids);
 
+    Mono<EventDocument> getEventById(String id);
+
     Mono<EventDTO> addParticipant(String eventId, JwtPayload userInfo);
 
     void updateValidity(String id, Validity validity, JwtPayload userInfo);
