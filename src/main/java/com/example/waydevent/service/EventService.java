@@ -26,6 +26,8 @@ public interface EventService {
 
     Mono<EventDTO> addParticipant(String eventId, JwtPayload userInfo);
 
+    Mono<EventDocument> cancelParticipation(String eventId, JwtPayload userInfo);
+
     void updateValidity(String id, Validity validity, JwtPayload userInfo);
 
     Mono<EventDocument> rateEvent(RateEvent rateEvent, long id);

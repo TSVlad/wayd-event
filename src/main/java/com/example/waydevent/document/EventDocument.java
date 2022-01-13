@@ -105,4 +105,8 @@ public class EventDocument {
 
         this.participantsIds.add(userInfo.getId());
     }
+
+    public  void cancelParticipation(long participantId) {
+        this.participantsIds.remove(participantId);
+    }
 }

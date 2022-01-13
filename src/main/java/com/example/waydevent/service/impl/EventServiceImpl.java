@@ -96,9 +96,16 @@ public class EventServiceImpl implements EventService {
                     eventDocument.addParticipant(userInfo);
                     return eventRepository.save(eventDocument);
                 }).map(eventDocument -> {
-                    EventDTO dto = MappingUtils.map(eventDocument, EventDTO.class);
-                    eventServiceProducer.newParticipant(dto, userInfo.getId());
-                    return dto;
+                    return MappingUtils.map(eventDocument, EventDTO.class);
+                });
+    }
+
+    @Override
+    public Mono<EventDocument> cancelParticipation(String eventId, JwtPayload userInfo) {
+        return eventRepository.findById(eventId)
+                .flatMap(eventDocument -> {
+                    eventDocument.cancelParticipation(userInfo.getId());
+                    return eventRepository.save(eventDocument);
                 });
     }
 

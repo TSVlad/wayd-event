@@ -64,6 +64,11 @@ public class EventController {
         return eventService.addParticipant(eventId, jwtPayload);
     }
 
+    @PostMapping("/participate/{eventId}/cancel")
+    public Mono<EventDTO> cancelParticipation(@NotNull @NotEmpty @PathVariable String eventId, @AuthenticationPrincipal JwtPayload userInfo) {
+        return eventService.cancelParticipation(eventId, userInfo).map(eventDocument -> modelMapper.map(eventDocument, EventDTO.class));
+    }
+
     @PostMapping("/rate")
     public Mono<EventDTO> rateEvent(@RequestBody RateEventDTO rateEventDTO, @AuthenticationPrincipal JwtPayload userInfo) {
         return eventService.rateEvent(modelMapper.map(rateEventDTO, RateEvent.class), userInfo.getId())
