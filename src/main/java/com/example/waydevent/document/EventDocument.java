@@ -74,6 +74,8 @@ public class EventDocument {
         this.dateTime = eventForCreateAndUpdateDTO.getDateTime();
         this.minNumberOfParticipants = eventForCreateAndUpdateDTO.getMinNumberOfParticipants();
         this.maxNumberOfParticipants = eventForCreateAndUpdateDTO.getMaxNumberOfParticipants();
+        this.minAge = eventForCreateAndUpdateDTO.getMinAge();
+        this.maxAge = eventForCreateAndUpdateDTO.getMaxAge();
         this.deadline = eventForCreateAndUpdateDTO.getDeadline();
         this.picturesRefs = eventForCreateAndUpdateDTO.getPicturesRefs();
         this.point = eventForCreateAndUpdateDTO.getPoint();
