@@ -20,6 +20,8 @@ public interface EventService {
 
     Flux<EventDTO> getEventsForUserId(long id);
 
+    Flux<EventDocument> getEventsForParticipantId(long id);
+
     Flux<EventDTO> getEventsForIds(List<String> ids);
 
     Mono<EventDocument> getEventById(String id);

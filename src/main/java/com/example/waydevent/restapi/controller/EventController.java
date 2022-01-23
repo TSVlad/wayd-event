@@ -48,6 +48,11 @@ public class EventController {
         return eventService.getEventsForUserId(id);
     }
 
+    @GetMapping("/participant/{id}")
+    public Flux<EventDTO> getEventsForParticipantId(@PathVariable long id) {
+        return eventService.getEventsForParticipantId(id).map(eventDocument -> modelMapper.map(eventDocument, EventDTO.class));
+    }
+
     @PostMapping("/for-ids")
     public Flux<EventDTO> getEventsForIds(@NotNull @RequestBody List<String> ids) {
         return eventService.getEventsForIds(ids);

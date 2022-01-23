@@ -18,4 +18,6 @@ public interface EventRepository extends ReactiveMongoRepository<EventDocument, 
     Flux<EventDocument> findAllByOwnerId(long id);
 
     Flux<EventDocument> findAllByIdIn(List<String> ids);
+
+    Flux<EventDocument> findAllByParticipantsIdsContaining(long id);
 }

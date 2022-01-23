@@ -80,6 +80,12 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public Flux<EventDocument> getEventsForParticipantId(long id) {
+        return eventRepository.findAllByParticipantsIdsContaining(id)
+                .filter(eventDocument -> eventDocument.getStatus() == EventStatus.ACTIVE);
+    }
+
+    @Override
     public Flux<EventDTO> getEventsForIds(List<String> ids) {
         return eventRepository.findAllByIdIn(ids).map(eventDocument -> MappingUtils.map(eventDocument, EventDTO.class));
     }
