@@ -19,6 +19,11 @@ spring:
   jackson:
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8484/auth/realms/WAYD/protocol/openid-connect/certs
 
 jwt:
   secret: very-secret-key

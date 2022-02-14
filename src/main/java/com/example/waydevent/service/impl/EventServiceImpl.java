@@ -1,7 +1,7 @@
 package com.example.waydevent.service.impl;
 
 import com.example.waydevent.business.RateEvent;
-import com.example.waydevent.config.security.JwtPayload;
+import com.example.waydevent.business.UserInfo;
 import com.example.waydevent.document.EventDocument;
 import com.example.waydevent.enums.EventStatus;
 import com.example.waydevent.messaging.consumer.dto.Validity;
@@ -34,7 +34,7 @@ public class EventServiceImpl implements EventService {
     private final EventServiceProducer eventServiceProducer;
 
     @Override
-    public Mono<EventDTO> saveEvent(EventForCreateAndUpdateDTO eventDTO, JwtPayload userInfo) {
+    public Mono<EventDTO> saveEvent(EventForCreateAndUpdateDTO eventDTO, UserInfo userInfo) {
         if (eventDTO.getId() == null) {
             return createEvent(eventDTO, userInfo);
         } else {
@@ -42,7 +42,7 @@ public class EventServiceImpl implements EventService {
         }
     }
 
-    private Mono<EventDTO> createEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, JwtPayload userInfo) {
+    private Mono<EventDTO> createEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, UserInfo userInfo) {
         EventDocument eventDocument = EventDocument.createEvent(eventForCreateAndUpdateDTO, userInfo);
         return eventRepository.save(eventDocument)
                 .map(document -> {
@@ -52,7 +52,7 @@ public class EventServiceImpl implements EventService {
                 });
     }
 
-    private Mono<EventDTO> updateEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, JwtPayload userInfo) {
+    private Mono<EventDTO> updateEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, UserInfo userInfo) {
         return eventRepository.findById(eventForCreateAndUpdateDTO.getId())
                 .flatMap(eventDocument -> {
                     if (userInfo.getId() != eventDocument.getOwnerId()) {
@@ -75,12 +75,12 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Flux<EventDTO> getEventsForUserId(long id) {
+    public Flux<EventDTO> getEventsForUserId(String id) {
         return eventRepository.findAllByOwnerId(id).filter(event -> event.getStatus() == EventStatus.ACTIVE).map(document -> modelMapper.map(document, EventDTO.class));
     }
 
     @Override
-    public Flux<EventDocument> getEventsForParticipantId(long id) {
+    public Flux<EventDocument> getEventsForParticipantId(String id) {
         return eventRepository.findAllByParticipantsIdsContaining(id)
                 .filter(eventDocument -> eventDocument.getStatus() == EventStatus.ACTIVE);
     }
@@ -96,7 +96,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Mono<EventDTO> addParticipant(String eventId, JwtPayload userInfo) {
+    public Mono<EventDTO> addParticipant(String eventId, UserInfo userInfo) {
         return eventRepository.findById(eventId)
                 .flatMap(eventDocument -> {
                     eventDocument.addParticipant(userInfo);
@@ -107,7 +107,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Mono<EventDocument> cancelParticipation(String eventId, JwtPayload userInfo) {
+    public Mono<EventDocument> cancelParticipation(String eventId, UserInfo userInfo) {
         return eventRepository.findById(eventId)
                 .flatMap(eventDocument -> {
                     eventDocument.cancelParticipation(userInfo.getId());
@@ -151,7 +151,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public void updateValidity(String id, Validity validity, JwtPayload userInfo) {
+    public void updateValidity(String id, Validity validity, UserInfo userInfo) {
         eventRepository.findById(id).flatMap(eventDocument -> {
             eventDocument.updateValidity(validity);
             return eventRepository.save(eventDocument);
@@ -161,7 +161,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Mono<EventDocument> rateEvent(RateEvent rateEvent, long id) {
+    public Mono<EventDocument> rateEvent(RateEvent rateEvent, String id) {
         return eventRepository.findById(rateEvent.getEventId()).flatMap(eventDocument -> {
             if (eventDocument.getDateTime().isAfter(ZonedDateTime.now())
                     || !eventDocument.getParticipantsIds().contains(id)) {

@@ -15,9 +15,9 @@ public interface EventRepository extends ReactiveMongoRepository<EventDocument, 
 
     Flux<EventDocument> findAllByPointWithinAndDateTimeAfter(GeoJsonPolygon geoJsonPolygon, ZonedDateTime dateTime);
 
-    Flux<EventDocument> findAllByOwnerId(long id);
+    Flux<EventDocument> findAllByOwnerId(String id);
 
     Flux<EventDocument> findAllByIdIn(List<String> ids);
 
-    Flux<EventDocument> findAllByParticipantsIdsContaining(long id);
+    Flux<EventDocument> findAllByParticipantsIdsContaining(String id);
 }

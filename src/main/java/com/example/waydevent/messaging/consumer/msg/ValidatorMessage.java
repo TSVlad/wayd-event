@@ -1,6 +1,5 @@
 package com.example.waydevent.messaging.consumer.msg;
 
-import com.example.waydevent.config.security.JwtPayload;
 import com.example.waydevent.messaging.AbstractMessage;
 import com.example.waydevent.messaging.consumer.dto.Validity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -17,7 +16,6 @@ import lombok.NoArgsConstructor;
 public class ValidatorMessage extends AbstractMessage {
     private ValidatorMessageType type;
     private String eventId;
-    private long userId;
+    private String userId;
     private Validity validity;
-    private JwtPayload userInfo;
 }

@@ -30,7 +30,7 @@ public class EventDTO {
     private Validity validity;
     private EventStatus status;
 
-    private long ownerId;
-    private Set<Long> participantsIds = new HashSet<>();
-    private Map<Long, Integer> rates = new HashMap<>();
+    private String ownerId;
+    private Set<String> participantsIds = new HashSet<>();
+    private Map<String, Integer> rates = new HashMap<>();
 }

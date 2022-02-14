@@ -1,6 +1,6 @@
 package com.example.waydevent.messaging.producer;
 
-import com.example.waydevent.config.security.JwtPayload;
+import com.example.waydevent.business.UserInfo;
 import com.example.waydevent.messaging.producer.msg.EventMessage;
 import com.example.waydevent.messaging.type.EventMessageType;
 import com.example.waydevent.restapi.dto.EventDTO;
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class EventServiceProducer {
     private final KafkaTemplate<Long, EventMessage> kafkaStarshipTemplate;
 
-    public void createEvent(EventDTO eventDTO, JwtPayload userInfo) {
+    public void createEvent(EventDTO eventDTO, UserInfo userInfo) {
         send(EventMessage.builder()
                 .type(EventMessageType.EVENT_CREATED)
                 .eventDTO(eventDTO)
@@ -23,7 +23,7 @@ public class EventServiceProducer {
                 .build());
     }
 
-    public void updateEvent(EventDTO eventDTO, JwtPayload userInfo) {
+    public void updateEvent(EventDTO eventDTO, UserInfo userInfo) {
         send(EventMessage.builder()
                 .type(EventMessageType.EVENT_UPDATED)
                 .eventDTO(eventDTO)
@@ -31,15 +31,7 @@ public class EventServiceProducer {
                 .build());
     }
 
-    public void newParticipant(EventDTO eventDTO, long userId) {
-        send(EventMessage.builder()
-                .type(EventMessageType.NEW_PARTICIPANT)
-                .eventDTO(eventDTO)
-                .userId(userId)
-                .build());
-    }
-
-    public void eventValidated(EventDTO eventDTO, JwtPayload userInfo) {
+    public void eventValidated(EventDTO eventDTO, UserInfo userInfo) {
         send(EventMessage.builder()
                 .type(EventMessageType.EVENT_VALIDATED)
                 .eventDTO(eventDTO)

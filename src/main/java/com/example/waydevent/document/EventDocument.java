@@ -1,6 +1,6 @@
 package com.example.waydevent.document;
 
-import com.example.waydevent.config.security.JwtPayload;
+import com.example.waydevent.business.UserInfo;
 import com.example.waydevent.config.security.Role;
 import com.example.waydevent.enums.EventStatus;
 import com.example.waydevent.enums.EventType;
@@ -45,12 +45,12 @@ public class EventDocument {
     private Validity validity;
     private EventStatus status;
 
-    private long ownerId;
-    private Set<Long> participantsIds = new HashSet<>();
+    private String ownerId;
+    private Set<String> participantsIds = new HashSet<>();
 
-    private Map<Long, Integer> rates = new HashMap<>();
+    private Map<String, Integer> rates = new HashMap<>();
 
-    public static EventDocument createEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, JwtPayload userInfo) {
+    public static EventDocument createEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, UserInfo userInfo) {
         EventDocument eventDocument = MappingUtils.map(eventForCreateAndUpdateDTO, EventDocument.class);
         eventDocument.setStatus(EventStatus.ON_VALIDATION);
         eventDocument.setValidity(Validity.NOT_VALIDATED);
@@ -95,7 +95,7 @@ public class EventDocument {
         }
     }
 
-    public void addParticipant(JwtPayload userInfo) {
+    public void addParticipant(UserInfo userInfo) {
         if (this.minAge != 0 && userInfo.getDateOfBirth().isAfter(this.dateTime.toLocalDate().minus(this.minAge, ChronoUnit.YEARS))
                 || this.maxAge != 0 && userInfo.getDateOfBirth().isBefore(this.dateTime.toLocalDate().minus(this.maxAge, ChronoUnit.YEARS))) {
             throw new InvalidAgeException();
@@ -108,7 +108,7 @@ public class EventDocument {
         this.participantsIds.add(userInfo.getId());
     }
 
-    public  void cancelParticipation(long participantId) {
+    public  void cancelParticipation(String participantId) {
         this.participantsIds.remove(participantId);
     }
 }

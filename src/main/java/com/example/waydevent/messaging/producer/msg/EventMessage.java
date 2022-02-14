@@ -1,6 +1,5 @@
 package com.example.waydevent.messaging.producer.msg;
 
-import com.example.waydevent.config.security.JwtPayload;
 import com.example.waydevent.messaging.AbstractMessage;
 import com.example.waydevent.messaging.type.EventMessageType;
 import com.example.waydevent.restapi.dto.EventDTO;
@@ -14,5 +13,5 @@ import lombok.experimental.SuperBuilder;
 public class EventMessage extends AbstractMessage {
     private EventMessageType type;
     private EventDTO eventDTO;
-    private long userId;
+    private String userId;
 }
