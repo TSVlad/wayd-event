@@ -174,4 +174,13 @@ public class EventServiceImpl implements EventService {
             return eventRepository.save(eventDocument);
         });
     }
+
+    @Override
+    public Mono<EventDocument> blockDocument(String eventId) {
+        return eventRepository.findById(eventId)
+                .flatMap(eventDocument -> {
+                    eventDocument.block();
+                    return eventRepository.save(eventDocument);
+                });
+    }
 }

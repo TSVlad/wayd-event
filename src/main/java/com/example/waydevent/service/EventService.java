@@ -33,4 +33,6 @@ public interface EventService {
     void updateValidity(String id, Validity validity, UserInfo userInfo);
 
     Mono<EventDocument> rateEvent(RateEvent rateEvent, String id);
+
+    Mono<EventDocument> blockDocument(String eventId);
 }

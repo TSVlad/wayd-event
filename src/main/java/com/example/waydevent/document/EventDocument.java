@@ -111,4 +111,8 @@ public class EventDocument {
     public  void cancelParticipation(String participantId) {
         this.participantsIds.remove(participantId);
     }
+
+    public void block() {
+        this.status = EventStatus.BLOCKED_BY_MODERATOR;
+    }
 }
