@@ -22,7 +22,6 @@ public class KeycloakAuthenticationService implements AuthenticationService {
     public UserInfo getUserInfo(Authentication authentication) {
         return UserInfo.builder()
                 .id(authentication.getName())
-                .username(((UserDetails)authentication.getPrincipal()).getUsername())
                 .dateOfBirth(LocalDate.parse((String)((JwtAuthenticationToken)authentication).getTokenAttributes().get("dateOfBirth")))
                 .roles(authentication.getAuthorities().stream().filter(role -> {
                     try {

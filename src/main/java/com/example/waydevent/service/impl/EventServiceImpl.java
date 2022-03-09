@@ -55,7 +55,7 @@ public class EventServiceImpl implements EventService {
     private Mono<EventDTO> updateEvent(EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO, UserInfo userInfo) {
         return eventRepository.findById(eventForCreateAndUpdateDTO.getId())
                 .flatMap(eventDocument -> {
-                    if (userInfo.getId() != eventDocument.getOwnerId()) {
+                    if (!userInfo.getId().equals(eventDocument.getOwnerId())) {
                         return Mono.error(new ForbiddenException());
                     }
                     eventDocument.updateEvent(eventForCreateAndUpdateDTO);
