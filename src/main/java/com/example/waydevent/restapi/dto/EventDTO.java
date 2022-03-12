@@ -1,6 +1,7 @@
 package com.example.waydevent.restapi.dto;
 
 import com.example.waydevent.enums.EventStatus;
+import com.example.waydevent.enums.EventType;
 import com.example.waydevent.messaging.consumer.dto.Validity;
 import lombok.Data;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
@@ -29,6 +30,7 @@ public class EventDTO {
 
     private Validity validity;
     private EventStatus status;
+    private EventType type;
 
     private String ownerId;
     private Set<String> participantsIds = new HashSet<>();
