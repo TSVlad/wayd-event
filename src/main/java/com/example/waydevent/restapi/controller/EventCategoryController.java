@@ -19,16 +19,19 @@ public class EventCategoryController {
 
     @GetMapping()
     public Flux<EventCategoryDTO> getAllEventCategories() {
+        log.debug("Get all categories request gotten");
         return eventCategoryService.getAllEventCategories();
     }
 
     @PostMapping()
     public Mono<EventCategoryDTO> saveEventCategory(@Valid @RequestBody EventCategoryDTO eventCategoryDTO) {
+        log.debug("Save event category request gotten");
         return eventCategoryService.saveEventCategory(eventCategoryDTO);
     }
 
     @DeleteMapping("/{id}")
     public Mono<Void> deleteCategory(@PathVariable String id) {
+        log.debug("Delete event category request gotten");
         return eventCategoryService.deleteEventCategory(id);
     }
 }
