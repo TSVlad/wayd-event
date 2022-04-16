@@ -44,14 +44,12 @@ class EventServiceImplTest extends BaseIntegrationTest {
 
     @Test
     void saveEventCreateTest() {
+        ZonedDateTime date = ZonedDateTime.now().minus(5, ChronoUnit.DAYS);
         EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO = EventForCreateAndUpdateDTO.builder()
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -64,10 +62,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -83,10 +78,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -102,10 +94,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -126,15 +115,13 @@ class EventServiceImplTest extends BaseIntegrationTest {
 
     @Test
     void saveEventUpdateTest() {
+        ZonedDateTime date = ZonedDateTime.now().minus(5, ChronoUnit.DAYS);
         EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO = EventForCreateAndUpdateDTO.builder()
                 .id("1")
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -148,10 +135,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                 .name("name1")
                 .category("category1")
                 .contacts("contacts1")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description1")
                 .picturesRefs(List.of("pic11", "pic21"))
                 .subCategory("subcategory1")
@@ -167,10 +151,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -186,10 +167,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -205,10 +183,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -230,15 +205,13 @@ class EventServiceImplTest extends BaseIntegrationTest {
 
     @Test
     void saveEventUpdateForbiddenTest() {
+        ZonedDateTime date = ZonedDateTime.now().minus(5, ChronoUnit.DAYS);
         EventForCreateAndUpdateDTO eventForCreateAndUpdateDTO = EventForCreateAndUpdateDTO.builder()
                 .id("1")
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -252,10 +225,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                 .name("name1")
                 .category("category1")
                 .contacts("contacts1")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description1")
                 .picturesRefs(List.of("pic11", "pic21"))
                 .subCategory("subcategory1")
@@ -271,10 +241,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -290,10 +257,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -315,16 +279,14 @@ class EventServiceImplTest extends BaseIntegrationTest {
 
     @Test
     void getEventsForUserIdTest() {
+        ZonedDateTime date = ZonedDateTime.now().minus(5, ChronoUnit.DAYS);
         List<EventDocument> documents = List.of(
                 EventDocument.builder()
                         .id("1")
                         .name("name")
                         .category("category")
                         .contacts("contacts")
-                        .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                                0, ZoneId.of("UTC")))
-                        .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                                0, ZoneId.of("UTC")))
+                        .dateTime(date)
                         .description("description")
                         .picturesRefs(List.of("pic1", "pic2"))
                         .subCategory("subcategory")
@@ -340,10 +302,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                         .name("name")
                         .category("category")
                         .contacts("contacts")
-                        .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                                0, ZoneId.of("UTC")))
-                        .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                                0, ZoneId.of("UTC")))
+                        .dateTime(date)
                         .description("description")
                         .picturesRefs(List.of("pic1", "pic2"))
                         .subCategory("subcategory")
@@ -359,10 +318,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                         .name("name")
                         .category("category")
                         .contacts("contacts")
-                        .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                                0, ZoneId.of("UTC")))
-                        .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                                0, ZoneId.of("UTC")))
+                        .dateTime(date)
                         .description("description")
                         .picturesRefs(List.of("pic1", "pic2"))
                         .subCategory("subcategory")
@@ -381,10 +337,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                         .name("name")
                         .category("category")
                         .contacts("contacts")
-                        .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                                0, ZoneId.of("UTC")))
-                        .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                                0, ZoneId.of("UTC")))
+                        .dateTime(date)
                         .description("description")
                         .picturesRefs(List.of("pic1", "pic2"))
                         .subCategory("subcategory")
@@ -400,10 +353,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -426,16 +376,14 @@ class EventServiceImplTest extends BaseIntegrationTest {
 
     @Test
     void getEventsForParticipantIdTest() {
+        ZonedDateTime date = ZonedDateTime.now().minus(5, ChronoUnit.DAYS);
         List<EventDocument> documents = List.of(
                 EventDocument.builder()
                         .id("1")
                         .name("name")
                         .category("category")
                         .contacts("contacts")
-                        .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                                0, ZoneId.of("UTC")))
-                        .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                                0, ZoneId.of("UTC")))
+                        .dateTime(date)
                         .description("description")
                         .picturesRefs(List.of("pic1", "pic2"))
                         .subCategory("subcategory")
@@ -451,10 +399,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                         .name("name")
                         .category("category")
                         .contacts("contacts")
-                        .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                                0, ZoneId.of("UTC")))
-                        .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                                0, ZoneId.of("UTC")))
+                        .dateTime(date)
                         .description("description")
                         .picturesRefs(List.of("pic1", "pic2"))
                         .subCategory("subcategory")
@@ -477,16 +422,14 @@ class EventServiceImplTest extends BaseIntegrationTest {
 
     @Test
     void getEventsForIdsTest() {
+        ZonedDateTime date = ZonedDateTime.now().minus(5, ChronoUnit.DAYS);
         List<EventDocument> documents = List.of(
                 EventDocument.builder()
                         .id("1")
                         .name("name")
                         .category("category")
                         .contacts("contacts")
-                        .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                                0, ZoneId.of("UTC")))
-                        .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                                0, ZoneId.of("UTC")))
+                        .dateTime(date)
                         .description("description")
                         .picturesRefs(List.of("pic1", "pic2"))
                         .subCategory("subcategory")
@@ -502,10 +445,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                         .name("name")
                         .category("category")
                         .contacts("contacts")
-                        .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                                0, ZoneId.of("UTC")))
-                        .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                                0, ZoneId.of("UTC")))
+                        .dateTime(date)
                         .description("description")
                         .picturesRefs(List.of("pic1", "pic2"))
                         .subCategory("subcategory")
@@ -524,10 +464,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                         .name("name")
                         .category("category")
                         .contacts("contacts")
-                        .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                                0, ZoneId.of("UTC")))
-                        .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                                0, ZoneId.of("UTC")))
+                        .dateTime(date)
                         .description("description")
                         .picturesRefs(List.of("pic1", "pic2"))
                         .subCategory("subcategory")
@@ -543,10 +480,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                         .name("name")
                         .category("category")
                         .contacts("contacts")
-                        .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                                0, ZoneId.of("UTC")))
-                        .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                                0, ZoneId.of("UTC")))
+                        .dateTime(date)
                         .description("description")
                         .picturesRefs(List.of("pic1", "pic2"))
                         .subCategory("subcategory")
@@ -569,15 +503,13 @@ class EventServiceImplTest extends BaseIntegrationTest {
 
     @Test
     void getEventByIdTest() {
+        ZonedDateTime date = ZonedDateTime.now().minus(5, ChronoUnit.DAYS);
         EventDocument document = EventDocument.builder()
                 .id("1")
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -598,15 +530,13 @@ class EventServiceImplTest extends BaseIntegrationTest {
 
     @Test
     void addParticipantTest() {
+        ZonedDateTime date = ZonedDateTime.now().minus(5, ChronoUnit.DAYS);
         EventDocument document = EventDocument.builder()
                 .id("1")
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -627,10 +557,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -646,10 +573,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -671,15 +595,13 @@ class EventServiceImplTest extends BaseIntegrationTest {
 
     @Test
     void addParticipantInvalidAgeTest() {
+        ZonedDateTime date = ZonedDateTime.now().minus(5, ChronoUnit.DAYS);
         EventDocument document = EventDocument.builder()
                 .id("1")
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -705,15 +627,13 @@ class EventServiceImplTest extends BaseIntegrationTest {
 
     @Test
     void addParticipantTooManyParticipantsTest() {
+        ZonedDateTime date = ZonedDateTime.now().minus(5, ChronoUnit.DAYS);
         EventDocument document = EventDocument.builder()
                 .id("1")
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -739,15 +659,13 @@ class EventServiceImplTest extends BaseIntegrationTest {
 
     @Test
     void cancelParticipationTest() {
+        ZonedDateTime date = ZonedDateTime.now().minus(5, ChronoUnit.DAYS);
         EventDocument document = EventDocument.builder()
                 .id("1")
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -767,10 +685,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -792,15 +707,13 @@ class EventServiceImplTest extends BaseIntegrationTest {
 
     @Test
     void updateValidityTest() {
+        ZonedDateTime date = ZonedDateTime.now().minus(5, ChronoUnit.DAYS);
         EventDocument document = EventDocument.builder()
                 .id("1")
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -822,10 +735,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.of(2022, 5, 30, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
-                .deadline(ZonedDateTime.of(2022, 5, 29, 12, 0, 0,
-                        0, ZoneId.of("UTC")))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -844,12 +754,13 @@ class EventServiceImplTest extends BaseIntegrationTest {
 
     @Test
     void rateEventTest() {
+        ZonedDateTime date = ZonedDateTime.now().minus(5, ChronoUnit.DAYS);
         EventDocument document = EventDocument.builder()
                 .id("1")
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.now().minus(5, ChronoUnit.DAYS))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -865,7 +776,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.now().minus(5, ChronoUnit.DAYS))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -888,12 +799,13 @@ class EventServiceImplTest extends BaseIntegrationTest {
 
     @Test
     void rateEventForbiddenTest() {
+        ZonedDateTime date = ZonedDateTime.now().minus(5, ChronoUnit.DAYS);
         EventDocument document = EventDocument.builder()
                 .id("1")
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.now().minus(5, ChronoUnit.DAYS))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -909,7 +821,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.now().minus(5, ChronoUnit.DAYS))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -932,12 +844,13 @@ class EventServiceImplTest extends BaseIntegrationTest {
 
     @Test
     void blockDocumentTest() {
+        ZonedDateTime date = ZonedDateTime.now().minus(5, ChronoUnit.DAYS);
         EventDocument document = EventDocument.builder()
                 .id("1")
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.now().minus(5, ChronoUnit.DAYS))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
@@ -953,7 +866,7 @@ class EventServiceImplTest extends BaseIntegrationTest {
                 .name("name")
                 .category("category")
                 .contacts("contacts")
-                .dateTime(ZonedDateTime.now().minus(5, ChronoUnit.DAYS))
+                .dateTime(date)
                 .description("description")
                 .picturesRefs(List.of("pic1", "pic2"))
                 .subCategory("subcategory")
