@@ -76,7 +76,8 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Flux<EventDTO> getEventsForUserId(String id) {
-        return eventRepository.findAllByOwnerId(id).filter(event -> event.getStatus() == EventStatus.ACTIVE).map(document -> modelMapper.map(document, EventDTO.class));
+        return eventRepository.findAllByOwnerId(id).filter(event -> event.getStatus() == EventStatus.ACTIVE)
+                .map(document -> modelMapper.map(document, EventDTO.class));
     }
 
     @Override

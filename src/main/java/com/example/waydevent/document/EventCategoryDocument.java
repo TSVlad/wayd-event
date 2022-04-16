@@ -1,6 +1,8 @@
 package com.example.waydevent.document;
 
 import com.example.waydevent.restapi.dto.EventCategoryDTO;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -12,6 +14,8 @@ import java.util.List;
 @Document(collection = "categories")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class EventCategoryDocument {
     @Id
     private String id;

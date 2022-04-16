@@ -3,6 +3,7 @@ package com.example.waydevent.config.security;
 import com.nimbusds.jose.shaded.json.JSONArray;
 import com.nimbusds.jose.shaded.json.JSONObject;
 import lombok.AllArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity()
 @AllArgsConstructor
+@ConditionalOnProperty("spring.security.oauth.resourceserver.jwt.jwk-set-uri")
 public class SecurityConfig {
 
     @Bean

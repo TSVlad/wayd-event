@@ -9,7 +9,10 @@ import com.example.waydevent.restapi.controller.advice.exceptions.InvalidAgeExce
 import com.example.waydevent.restapi.controller.advice.exceptions.TooManyParticipantsException;
 import com.example.waydevent.restapi.dto.EventForCreateAndUpdateDTO;
 import com.example.waydevent.util.MappingUtils;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
@@ -21,6 +24,9 @@ import java.util.*;
 
 @Document(collection = "events")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class EventDocument {
     @Id
     private String id;

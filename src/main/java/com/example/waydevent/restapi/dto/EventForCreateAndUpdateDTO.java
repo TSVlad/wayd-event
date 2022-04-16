@@ -1,7 +1,10 @@
 package com.example.waydevent.restapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -13,6 +16,9 @@ import java.util.List;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class EventForCreateAndUpdateDTO {
     private String id;
 
